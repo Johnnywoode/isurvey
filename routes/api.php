@@ -38,6 +38,7 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function(){
     Route::get('/', [QuestionController::class, 'show']);
     Route::get('/{id}', [QuestionController::class, 'showSingle']);
     Route::get('/with-answers/{id}', [QuestionController::class, 'getQuestionWithAnswers']);
+    Route::get('/survey-questions-with-answers/{id}', [QuestionController::class, 'getSurveyQuestionsWithAnswers']);
     Route::put('/{id}', [QuestionController::class, 'update']);
     Route::delete('/{id}', [QuestionController::class, 'delete']);
   });

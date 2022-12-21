@@ -20,6 +20,12 @@ class QuestionController extends Controller
     return response($data, 200);
   }
 
+  public function getSurveyQuestionsWithAnswers($survey_id)
+  {
+    $data = Question::where(['survey_id' => $survey_id, 'status' => StatusEnum::ACTIVE])->with('answers')->first();
+    return response($data, 200);
+  }
+
   public function showSingle($id)
   {
     $data = Question::where(['id' => $id, 'status' => StatusEnum::ACTIVE])->with('survey')->first();
