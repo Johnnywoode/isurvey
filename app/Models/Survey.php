@@ -39,6 +39,13 @@ class Survey extends Model
     ];
 
     /**
+    * The relationships that should always be loaded.
+    *
+    * @var array
+    */
+    protected $with = ['creator'];
+
+    /**
      * Get the questions for the survey.
      */
     public function questions()
@@ -51,6 +58,6 @@ class Survey extends Model
      */
     public function creator()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->belongsTo(User::class, 'id');
     }
 }
