@@ -21,7 +21,7 @@ return new class extends Migration
       $table->text('answer')->comment('answer to question');
       $table->timestamp('created_at')->useCurrent();
       $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-      $table->timestamp('deleted_at')->nullable();
+      $table->softDeletes();
     });
   }
 
