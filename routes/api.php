@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/users', function(){
-  return User::with(['surveys'])->get();
+
+
+Route::prefix('v1')->middleware(['auth:sanctum'])->group(function(){
+  Route::get('/users', function(){
+    dd(auth('sanctum')->check() ? "Auth" : "Guest");
+    // return User::with(['surveys'])->get();
+  });
 });
