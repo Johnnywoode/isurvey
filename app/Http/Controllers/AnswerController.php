@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Answer;
-Use App\Enums\StatusEnum;
+use App\Enums\StatusEnum;
 
 class AnswerController extends Controller
 {
@@ -41,20 +41,22 @@ class AnswerController extends Controller
   public function store(Request $request)
   {
     $request->validate([
+      'answered_by' => 'required|integer|exists:users,id',
       'survey_id' => 'required|integer',
       'question_id' => 'required|integer',
       'answer' => 'required|string',
     ], [
+      'answered_by.exists' => 'Sorry user id for answered by feild does not exist',
       'survey_id.required' => 'Survey id is required',
       'question_id.required' => 'Question id is required',
       'answer.required' => 'Answer is required',
     ]);
 
     $newAnswer = new Answer([
+      'answered_by' => $request->answered_by,
       'survey_id' => $request->survey_id,
       'question_id' => $request->question_id,
-      'answer' => $request->answer,
-      'answered_by' => auth()->user()->id
+      'answer' => $request->answer
     ]);
     $newAnswer->save();
 
@@ -66,13 +68,17 @@ class AnswerController extends Controller
     $request->validate([
       'survey_id' => 'integer',
       'question_id' => 'integer',
-      'answer' => 'string'
+      'answer' => 'string',
+      'answered_by' => 'integer|exists:users,id'
+    ], [
+      'answered_by.exists' => 'Sorry user id for answered by feild does not exist'
     ]);
 
     $answer = Answer::find($id);
     $answer->survey_id = $request->survey_id ? $request->survey_id : $answer->survey_id;
     $answer->question_id = $request->question_id ? $request->question_id : $answer->question_id;
     $answer->answer = $request->answer ? $request->answer : $answer->answer;
+    $answer->answered_by = $request->answered_by ? $request->answered_by : $answer->answered_by;
     $answer->save();
 
     return response('answer updated successfully', 200);

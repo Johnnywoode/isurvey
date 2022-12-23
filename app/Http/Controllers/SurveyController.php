@@ -11,10 +11,20 @@ class SurveyController extends Controller
   public function show()
   {
     $data = Survey::where(['status' => StatusEnum::ACTIVE, 'deleted_at' => null])->orderBy('created_at', 'desc')->get();
-    return response($data, 200);
+        if ($data) {
+            return response($data, 200);
+        }
+        abort(404);
+    // return response($data, 200);
   }
 
   public function showSingle($id)
+  {
+    $data = Survey::where(['id' => $id, 'status' => StatusEnum::ACTIVE, 'deleted_at' => null])->first();
+    return response($data? $data: 'Survey not found', $data? 200 : 404);
+  }
+
+  public function getSurveyWithQuestions($id)
   {
     $data = Survey::where(['id' => $id, 'status' => StatusEnum::ACTIVE, 'deleted_at' => null])->with('questions')->first();
     return response($data, 200);
@@ -22,16 +32,17 @@ class SurveyController extends Controller
 
   public function store(Request $request)
   {
-    $user = auth()->user();
     $request->validate([
+      'created_by' => 'required|integer|exists:users,id',
       'title' => 'required|string|max:100'
     ], [
-      'title.required' => 'Survey title is required'
+      'title.required' => 'Survey title is required',
+      'created_by.exists' => 'Sorry user id for created by feild does not exist'
     ]);
 
     $newSurvey = new Survey([
       'title' => $request->title,
-      'created_by' => $user->id,
+      'created_by' => $request->created_by,
       'status' => StatusEnum::ACTIVE
     ]);
     $newSurvey->save();

@@ -49,7 +49,7 @@ class QuestionController extends Controller
       'survey_id' => $request->survey_id,
       'question' => $request->question,
       'type' => $request->type,
-      'options' => $request->options? $request->options : null,
+      'options' => $request->options ? $request->options : null,
       'status' => StatusEnum::ACTIVE
     ]);
     $newQuestion->save();
@@ -68,7 +68,7 @@ class QuestionController extends Controller
     ]);
 
     $question = Question::find($id);
-    $question->question_id = $request->question_id ? $request->question_id : $question->question_id;
+    $question->survey_id = $request->survey_id ? $request->survey_id : $question->survey_id;
     $question->question = $request->question ? $request->question : $question->question;
     $question->type = $request->type ? $request->type : $question->type;
     $question->save();
