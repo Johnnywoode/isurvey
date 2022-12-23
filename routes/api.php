@@ -18,17 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
-
-Route::prefix('v1')->middleware(['auth:sanctum'])->group(function(){
+Route::prefix('v1')->group(function(){
   Route::prefix('survey')->group(function () {
     Route::post('/', [SurveyController::class, 'store']);
     Route::get('/', [SurveyController::class, 'show']);
     Route::get('/{id}', [SurveyController::class, 'showSingle']);
+    Route::get('/with-questions/{id}', [SurveyController::class, 'getSurveyWithQuestions']);
     Route::put('/{id}', [SurveyController::class, 'update']);
     Route::delete('/{id}', [SurveyController::class, 'delete']);
   });
