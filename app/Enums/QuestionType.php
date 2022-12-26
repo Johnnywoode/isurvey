@@ -1,6 +1,7 @@
 <?php
 namespace App\Enums;
 use App\Traits\{EnumOptions,EnumValues};
+
 enum QuestionType: string
 {
     use EnumValues;

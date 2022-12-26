@@ -34,7 +34,8 @@ class User extends Authenticatable //implements MustVerifyEmail
     'remember_token',
     'email_verified_at',
     'two_factor_secret',
-    'two_factor_recovery_codes'
+    'two_factor_recovery_codes',
+    'deleted_at'
   ];
 
   /**

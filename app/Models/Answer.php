@@ -10,9 +10,7 @@ class Answer extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = [
-      'answerer'
-    ];
+    protected $with = [ ];
 
   /**
    * The attributes that are mass assignable.
@@ -31,7 +29,9 @@ class Answer extends Model
    *
    * @var array<int, string>
    */
-  protected $hidden = [];
+  protected $hidden = [
+        'deleted_at'
+  ];
 
   /**
    * The attributes that should be cast.
@@ -49,15 +49,7 @@ class Answer extends Model
    */
   public function question()
   {
-    return $this->hasOne(Question::class, 'id');
-  }
-
-  /**
-   * Get the survey that the answer belongs to.
-   */
-  public function survey()
-  {
-    return $this->hasOne(Survey::class, 'id');
+    return $this->belongsTo(Question::class, 'question_id', 'id');
   }
 
   /**
@@ -65,6 +57,6 @@ class Answer extends Model
    */
   public function answerer()
   {
-    return $this->hasOne(User::class, 'id', 'answered_by');
+    return $this->hasOne(User::class, 'answered_by', 'id');
   }
 }

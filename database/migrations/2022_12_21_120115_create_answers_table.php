@@ -16,7 +16,6 @@ return new class extends Migration
     Schema::create('answers', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('answered_by')->comment('id of the user for which the answer belongs to');
-      $table->unsignedBigInteger('survey_id')->comment('id of the survey for which the question being answered belongs to');
       $table->unsignedBigInteger('question_id')->comment('id of the question for which the answer belongs to');
       $table->text('answer')->comment('answer to question');
       $table->timestamp('created_at')->useCurrent();

@@ -20,19 +20,16 @@ class AnswerSeeder extends Seeder
     DB::table('answers')->insert([
       [
         'answered_by' => 1,
-        'survey_id' => 1,
         'question_id' => 1,
         'answer' => 'yes',
       ],
       [
         'answered_by' => 1,
-        'survey_id' => 1,
         'question_id' => 2,
         'answer' => 'quite',
       ],
       [
         'answered_by' => 1,
-        'survey_id' => 1,
         'question_id' => 3,
         'answer' => '25',
       ]
