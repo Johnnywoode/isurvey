@@ -28,7 +28,7 @@ class Question extends Model
    *
    * @var array<int, string>
    */
-  protected $hidden = [];
+  protected $hidden = ['deleted_at'];
 
   /**
    * The attributes that should be cast.
@@ -47,7 +47,7 @@ class Question extends Model
    */
   public function survey()
   {
-    return $this->hasOne(Survey::class, 'id');
+    return $this->belongsTo(Survey::class, 'survey_id', 'id');
   }
 
   /**

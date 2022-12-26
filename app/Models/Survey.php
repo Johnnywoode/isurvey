@@ -26,7 +26,7 @@ class Survey extends Model
      *
      * @var array<int, string>
      */
-    protected $hidden = [];
+    protected $hidden = ['deleted_at'];
 
     /**
      * The attributes that should be cast.
@@ -44,14 +44,14 @@ class Survey extends Model
     *
     * @var array
     */
-    protected $with = ['creator'];
+    protected $with = [];
 
     /**
      * Get the questions for the survey.
      */
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class, 'survey_id', 'id');
     }
 
     /**
@@ -59,7 +59,7 @@ class Survey extends Model
      */
     public function creator()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
   public static function boot()

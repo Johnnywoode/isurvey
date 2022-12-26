@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('answers', function (Blueprint $table) {
             $table->foreign('answered_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
@@ -29,7 +28,6 @@ return new class extends Migration
     {
         Schema::table('answers', function (Blueprint $table) {
             $table->dropForeign('answered_by');
-            $table->dropForeign('survey_id');
             $table->dropForeign('question_id');
         });
     }
